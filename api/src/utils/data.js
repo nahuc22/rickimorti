@@ -1123,5 +1123,5 @@ module.exports = [
             "url": "https://rickandmortyapi.com/api/character/40",
             "created": "2017-11-05T10:02:26.701Z"
             }
-]
+];
             
