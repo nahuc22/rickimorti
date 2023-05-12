@@ -1,16 +1,52 @@
 import React from "react";
 import Card from "../Card/Card";
-import { connect } from "react-redux";
-import { removeFav } from "../../Redux/Action/Actions";
+import { useDispatch, useSelector } from "react-redux";
+import {filterCharacter, orderCharacter, removeFav, reset } from "../../Redux/Action/Actions";
 
 
-function Favorites({myFavorites, onClose, removeFav}) {
+export default function Favorites({ onClose }) {
+    const {myFavorites} = useSelector((state)=> state);
+    const dispatch = useDispatch();
+    
     function closeFavorite(id){
         onClose(id)
-        removeFav(id)
+        dispatch(removeFav(id)) 
+    }
+
+    function handlerOrder(event){
+        event.preventDefault();
+        const {name, value} = event.target
+        dispatch(orderCharacter(value))
+    }
+
+    function handlerFilter(event){
+        event.preventDefault();
+        const {name, value} = event.target
+        dispatch(filterCharacter(value))
+    }
+
+    function bttnReset(){
+        dispatch(reset())
     }
     return (
         <div>
+            <div>
+            <select onChange={handlerOrder} name="order" defaultValue={"DEFAULT"}>
+                <option value="DEFAULT" disable>Select order</option>
+                <option value="Ascendente">Ascendente</option>
+                <option value="Descendente">Descendente</option>    
+             </select>
+             <select onChange={handlerFilter} name="filter" defaultValue={"DEFAULT"}>
+                <option value="DEFAULT" disable>Select Filter</option>
+                   <option value="Male">Male</option>
+                   <option value="Female">Female</option>
+                   <option value="Genderless">Genderless</option>
+                   <option value="unknown">Unknown</option>               
+            </select>
+            <button onClick={bttnReset}>Reset</button>
+            </div>
+
+
             {myFavorites &&
                 myFavorites.map((element, index) => {
                     return (
@@ -31,14 +67,14 @@ function Favorites({myFavorites, onClose, removeFav}) {
         </div>
     )
 }
-function mapStateToProps(state){
-    return {
-        myFavorites: state.myFavorites
-    }
-}
-function mapDispatch(dispatch){
-    return {
-        removeFav: (id) => dispatch(removeFav(id))
-    }
-}
-export default connect(mapStateToProps, mapDispatch )(Favorites);
+// function mapStateToProps(state){
+//     return {
+//         myFavorites: state.myFavorites
+//     }
+// }
+// function mapDispatch(dispatch){
+//     return {
+//         removeFav: (id) => dispatch(removeFav(id))
+//     }
+// }
+// export default connect(mapStateToProps, mapDispatch )(Favorites);

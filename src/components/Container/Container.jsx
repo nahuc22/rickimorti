@@ -1,10 +1,23 @@
+import { useSelector } from "react-redux";
 import Card from "../Card/Card";
+import Paginate from "../Paginate/Paginate";
 
-export default function Container({characters, onClose}) {
+
+export default function Container({onClose}) {
+    const {characters} = useSelector((state) => state)
+    const {numPage}  = useSelector((state) => state)
+    
+        let desde = (numPage - 1) * 5;
+        let hasta = numPage * 5;
+
+    let viewCharacter = characters.slice(desde,hasta)
+
+    let cantPages = Math.floor(characters?.length / 5);
    return (
     <div>
         {
-        characters.map(({name, species, gender ,image, index, origin, id }) => {
+         viewCharacter &&   
+           viewCharacter.map(({name, species, gender ,image, index, origin, id }) => {
             return <Card 
             key = {index}
             id = {id}
@@ -17,6 +30,7 @@ export default function Container({characters, onClose}) {
             ></Card>
         })
         }
+        <Paginate cantPages={cantPages}></Paginate>
         </div>
     )
 }

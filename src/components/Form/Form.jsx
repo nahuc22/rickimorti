@@ -1,5 +1,5 @@
 import { useState } from "react";
-import validation, { Validation } from "../Validation/Validation"
+import validation from "../Validation/Validation"
 
 const Form = ({login}) => {
 const [errors, setErrors] = useState({});
