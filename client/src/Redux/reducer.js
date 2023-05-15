@@ -1,14 +1,25 @@
-import { ADD_FAV, REMOVE_FAV , FILTER, ORDER, RESET, ADD_CHARACTER, REMOVE_CHARACTER , NEXT_PAGE , PREV_PAGE, ADD_LOCATION} from './Action/types';
+import {RESET_CHARACTER, SEARCH_CHARACTER, ADD_FAV, REMOVE_FAV , FILTER, ORDER, RESET, ADD_CHARACTER, REMOVE_CHARACTER , NEXT_PAGE , PREV_PAGE, ADD_LOCATION, HANDLE_NUMBER} from './Action/types';
 
 const initialState = {
 location: [],
 numPage: 1,
 characters:[],
+charactersOrigin:[],
 myFavorites:[],
 myFavoritesOrigin:[]
 };
 export default function rootReducer(state=initialState,{type, payload}){
     switch (type) {
+        case HANDLE_NUMBER:
+            return {
+                ...state,
+                numPage: payload
+            }
+        case SEARCH_CHARACTER:
+            return {
+                ...state,
+                characters: [payload]
+            } 
         case ADD_LOCATION:
             return {
                 ...state,
@@ -29,11 +40,17 @@ export default function rootReducer(state=initialState,{type, payload}){
                 return {
                     ...state,
                     characters: [...state.characters,...payload], 
+                    charactersOrigin: [...state.characters,...payload]
                 }    
             }
             return {
                 ...state,
                 characters: [payload,...state.characters]
+            }
+        case RESET_CHARACTER: 
+            return {
+                ...state,
+                characters: [...state.charactersOrigin]
             }
         case REMOVE_CHARACTER:
                 const newCharacter = state.characters.filter((ch) => ch.id !== payload)

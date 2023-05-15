@@ -1,4 +1,4 @@
-import { ADD_FAV, FILTER, REMOVE_FAV, ORDER, RESET, ADD_CHARACTER, REMOVE_CHARACTER, NEXT_PAGE, PREV_PAGE, ADD_LOCATION} from './types';
+import {HANDLE_NUMBER, RESET_CHARACTER , SEARCH_CHARACTER, ADD_FAV, FILTER, REMOVE_FAV, ORDER, RESET, ADD_CHARACTER, REMOVE_CHARACTER, NEXT_PAGE, PREV_PAGE, ADD_LOCATION} from './types';
 
 export function addLocation(path){
     return {
@@ -34,6 +34,12 @@ export function orderCharacter(order) {
     }
 }
 
+export function resetCharacter(){
+    return {
+        type: RESET_CHARACTER
+    }
+}
+
 export function reset(){
     return{
         type: RESET
@@ -53,6 +59,12 @@ export function prevPage(){
         type: PREV_PAGE
     }
 }
+export function searchCharacter(character){
+    return {
+        type: SEARCH_CHARACTER,
+        payload: character
+    }
+}
 
 export function addCharacter(character){
     return {
@@ -60,10 +72,15 @@ export function addCharacter(character){
         payload: character
     }
 }
-
 export function removeCharacter(id){
     return {
         type: REMOVE_CHARACTER,
         payload: id
+    }
+}
+export function handleNumber(num){
+    return {
+        type: HANDLE_NUMBER,
+        payload: num
     }
 }

@@ -1,9 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "../Card/Card";
 import Paginate from "../Paginate/Paginate";
 
-
 export default function Container({onClose}) {
+    // const dispatch = useDispatch()
+    // useEffect(() => {   
+    //     dispatch(resetCharacter())
+    // }, [])
+
     const {characters} = useSelector((state) => state)
     const {numPage}  = useSelector((state) => state)
     

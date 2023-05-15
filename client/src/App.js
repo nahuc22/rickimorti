@@ -8,7 +8,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import About from './components/About/About';
 import Form from './components/Form/Form';
 import Favorites from './components/Favorite/Favorite';
-import { addCharacter, addLocation } from './Redux/Action/Actions';
+import { addCharacter, addLocation , searchCharacter} from './Redux/Action/Actions';
 import { useDispatch } from 'react-redux';
 
 
@@ -47,44 +47,23 @@ if (userData.email === email && userData.password === password){
   },  [access])
   
   useEffect(() => {
-    const request = [];
-    for (let num = 32; num < 42; num++) {
-      request.push(
-        axios.get(`https://rickandmortyapi.com/api/character?page=${num}`)
-      );
-    }
-    Promise.all(request)
-      .then((results) => {
-        //console.log(":::")
-        let newCharacters = [];
-        results.map((
-          chars) => (newCharacters = [...newCharacters, ...chars.data.results])
-        );
-        console.log(":::", newCharacters);
-        setCharacters([...newCharacters]);
-        dispatch(addCharacter(newCharacters))
+      axios
+        .get(`http://localhost:3001/rickandmorty/characters`) 
+        .then((results) => {
+        console.log(":::", results.data);
+        setCharacters([...results.data]);
+        dispatch(addCharacter(results.data))
       })
-      .catch((error) => { });
   }, []);
 
 
   const onSearch = (id) => {
-    axios (`https://rickandmortyapi.com/api/character/${id}`)
-      .then(response => response.data)
-      .then((data) => { 
-        if (data.name) {
-          let exist = characters.find((character) => character.id === data.id)
-          if(exist){
-            alert("Ya existe")
-          } else {
-            setCharacters((oldChars) => [...oldChars, data]);
-            dispatch(addCharacter(data))
-          }
-        } else {
-          window.alert('¡No hay personajes con este ID!');
-        }
-      });
+    axios (`http://localhost:3001/rickandmorty/character/${id}`)
+      .then(({data}) => { 
+        dispatch(searchCharacter(data))
+      })
   }
+
   const onClose = (id) => {
     const charactersFiltered = characters.filter(character => 
       character.id !== Number(id));
