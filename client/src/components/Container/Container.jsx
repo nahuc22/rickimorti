@@ -14,22 +14,22 @@ export default function Container({onClose}) {
         let desde = (numPage - 1) * 5;
         let hasta = numPage * 5;
 
-    let viewCharacter = characters.slice(desde,hasta)
+    let viewCharacter = characters?.slice(desde,hasta)
 
-    let cantPages = Math.floor(characters?.length / 5);
+    let cantPages = Math.floor(characters.length / 5);
    return (
     <div>
         {
          viewCharacter &&   
-           viewCharacter.map(({name, species, gender ,image, index, origin, id }) => {
+           viewCharacter.map((element, index) => {
             return <Card 
             key = {index}
-            id = {id}
-            name = {name}
-            species = {species}
-            gender = {gender}
-            image  = {image}
-            origin={origin.name}
+            id = {element.id}
+            name = {element.name} 
+            species = {element.species}
+            gender = {element.gender}
+            image  = {element.image}
+            origin={element.origin.name}
             onClose ={onClose}
             ></Card>
         })

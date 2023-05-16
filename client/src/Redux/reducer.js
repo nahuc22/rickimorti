@@ -53,7 +53,7 @@ export default function rootReducer(state=initialState,{type, payload}){
                 characters: [...state.charactersOrigin]
             }
         case REMOVE_CHARACTER:
-                const newCharacter = state.characters.filter((ch) => ch.id !== payload)
+                const newCharacter = state.charactersOrigin.filter((ch) => ch.id !== payload)
                 return {
                     ...state,
                     myFavorites: newCharacter,
@@ -66,7 +66,7 @@ export default function rootReducer(state=initialState,{type, payload}){
                 myFavoritesOrigin: [...state.myFavoritesOrigin, payload]
             };
         case REMOVE_FAV:
-                const newFavorites = state.myFavorites.filter((ch) => ch.id !== payload)
+                const newFavorites = state.myFavoritesOrigin.filter((ch) => ch.id !== payload)
                 return {
                     ...state,
                     myFavorites: newFavorites,
